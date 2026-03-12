@@ -1,71 +1,163 @@
-# Getting Started with Create React App
+# JobTrackr — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> A clean, modern job application tracking dashboard built with React. Track every application, visualize your pipeline, and auto-fill job data from any URL using AI.
 
-## Available Scripts
+🌐 **Live Demo:** [jobtrackr-sy.vercel.app](https://jobtrackr-sy.vercel.app)  
+🔗 **Backend Repo:** [github.com/tywish-dev/jobtrackr](https://github.com/tywish-dev/jobtrackr)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 🤖 **AI Auto-fill** — Paste a job posting URL and watch company, role, salary, and notes populate automatically
+- 📊 **Stats Dashboard** — Visual pipeline breakdown with response rate and status distribution
+- 🔍 **Filter & Search** — Filter by status (Applied, Interview, Offer, Rejected) and search by company or role
+- 🔐 **JWT Auth** — Secure login and registration with token-based session management
+- 📱 **Clean UI** — Editorial minimalist design with a forest green accent palette
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Layer | Technology |
+|---|---|
+| Framework | React 18 |
+| HTTP Client | Axios |
+| Routing | React Router v6 |
+| Charts | Recharts |
+| Deployment | Vercel |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Screenshots
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Dashboard Overview
+> Stat cards, pipeline pie chart, and recent applications at a glance
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Applications Table
+> Full list with status badges, salary range, applied date, and edit/delete actions
 
-### `npm run eject`
+### AI Auto-fill
+> Paste a job URL → click Auto-fill → form populates in seconds
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Stats View
+> Response rate bar and breakdown by every status stage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js 18+
+- npm
+- JobTrackr API running (locally or on Render)
 
-## Learn More
+### Run Locally
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**1. Clone the repo**
+```bash
+git clone https://github.com/tywish-dev/jobtrackr-frontend.git
+cd jobtrackr-frontend
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**2. Install dependencies**
+```bash
+npm install
+```
 
-### Code Splitting
+**3. Create environment file**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Create `.env.development` in the root:
+```
+REACT_APP_API_URL=http://localhost:8080
+```
 
-### Analyzing the Bundle Size
+**4. Start**
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+App runs at `http://localhost:3000`
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Environment Variables
 
-### Advanced Configuration
+| Variable | Description |
+|---|---|
+| `REACT_APP_API_URL` | Base URL of the JobTrackr backend API |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+For production this points to the Render deployment:
+```
+REACT_APP_API_URL=https://jobtrackr-api-id0v.onrender.com
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Project Structure
 
-### `npm run build` fails to minify
+```
+src/
+├── api/
+│   └── axios.js              — Axios instance with JWT interceptor
+├── components/
+│   ├── Sidebar.jsx            — Navigation sidebar
+│   ├── StatCard.jsx           — Metric display card
+│   ├── StatusBadge.jsx        — Color-coded status pill
+│   └── ApplicationModal.jsx   — Add/edit form with AI auto-fill
+├── context/
+│   └── AuthContext.jsx        — JWT auth state and login/logout
+└── pages/
+    ├── Login.jsx              — Split-panel login page
+    ├── Register.jsx           — Registration with password strength
+    └── Dashboard.jsx          — Main dashboard with all views
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# jobtrackr-frontend
+---
+
+## How AI Auto-fill Works
+
+1. Open the **Add Application** modal
+2. Paste any job posting URL into the Job URL field
+3. Click **✦ Auto-fill**
+4. The backend fetches the page, extracts structured data using LLaMA 3.1, and returns:
+   - Company name
+   - Job title
+   - Salary range
+   - Role summary
+5. Fields populate instantly — just review and save
+
+Works best with Greenhouse, Lever, Workday, and direct company career pages.
+
+---
+
+## Deployment
+
+This app is deployed on **Vercel** with automatic deployments on every push to `main`.
+
+To deploy your own instance:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel --prod
+```
+
+Add `REACT_APP_API_URL` as an environment variable in your Vercel project settings.
+
+---
+
+## Author
+
+**Samet Yılmaz** — Software Engineer
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/samet-yilmaz-dev)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/tywish-dev)
+
+---
+
+## License
+
+MIT
